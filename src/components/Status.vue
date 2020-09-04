@@ -46,6 +46,7 @@ export default defineComponent({
 .status {
   color: #fff;
   font-size: 0.8rem;
+  overflow-y: auto;
   padding: 1rem 1.5rem;
 
   h1 {

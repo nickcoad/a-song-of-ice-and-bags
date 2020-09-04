@@ -48,7 +48,7 @@ export default defineComponent({
 .screen {
   background-color: #212730;
   display: grid;
-  grid-template-rows: 70px auto 50px;
+  grid-template-rows: 70px minmax(0, auto) 50px;
   height: 100%;
   overflow: hidden;
   width: 100%;

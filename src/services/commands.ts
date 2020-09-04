@@ -45,7 +45,7 @@ function handleCommand(cmd: Command) {
       if (!thisPerson) return
 
       addMessage('You take a big whiff of ' + thisPerson.displayName, 'output')
-      addMessage(thisPerson.odour, 'info')
+      addMessage(thisPerson.odour || 'They smell pleasant!', 'info')
 
       break
     }

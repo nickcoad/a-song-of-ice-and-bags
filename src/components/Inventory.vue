@@ -1,5 +1,5 @@
 <template>
-  <div class="status">
+  <div class="inventory">
     <h1>Your Inventory</h1>
     <ul>
       <li v-for="invItem in inventoryItems" :key="invItem.name">
@@ -32,8 +32,9 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.status {
+.inventory {
   color: #fff;
+  font-size: 0.8rem;
   padding: 1rem 1.5rem;
 
   h1 {

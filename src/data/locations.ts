@@ -10,7 +10,8 @@ export default [
       'church-street',
       '109-tram',
       '12-tram',
-      'yarra-trail-richmond'
+      'yarra-trail-richmond',
+      'stingos'
     ],
     people: []
   },
@@ -44,7 +45,8 @@ export default [
     displayName: 'The Leadbeater',
     appearance: '',
     flavour: [
-      "It's a quiet day at The Leadbeater, but the locals are in as always."
+      "It's a quiet day at The Leadbeater, but the locals are in as always.",
+      'Bit of a busy day, Will is behind the bar and he looks stressed.'
     ],
     connections: ['church-street'],
     people: [
@@ -52,7 +54,9 @@ export default [
       'leah-mariani',
       'declan-doherty',
       'karol-vitangcol',
-      'anna-latussek'
+      'anna-latussek',
+      'karen',
+      'ruben-rodriguez'
     ]
   },
   {
@@ -74,7 +78,7 @@ export default [
     displayName: 'The Coad Abode',
     appearance: '',
     flavour: '',
-    connections: ['west-victoria-street'],
+    connections: ['east-victoria-street'],
     people: ['nick-coad']
   },
   {
@@ -167,6 +171,14 @@ export default [
     appearance: "It's the News Perform office!",
     flavour: '',
     connections: ['12-tram', '109-tram'],
-    people: ['declan-doherty', 'anna-latussek', 'karol-vitangcol']
+    people: ['declan-doherty', 'anna-latussek', 'karol-vitangcol', 'van-nim']
+  },
+  {
+    name: 'stingos',
+    displayName: "Stingo's",
+    appearance: '',
+    flavour: '',
+    connections: ['west-victoria-street'],
+    people: ['nicole-fraser']
   }
 ]
