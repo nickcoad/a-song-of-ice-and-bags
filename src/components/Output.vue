@@ -29,6 +29,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .output {
   color: #fff;
+  overflow: auto;
   padding: 1rem 1.5rem;
 }
 </style>

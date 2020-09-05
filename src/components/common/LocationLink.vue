@@ -4,11 +4,10 @@
 
 <script lang="ts">
 import { addMessage } from '@/services/messages'
-import { setLocation } from '@/services/game'
 
 export default {
   props: ['index', 'location'],
-  setup(props) {
+  setup(props: any) {
     const travel = function() {
       addMessage(`move ${props.index + 1}`, 'input')
     }

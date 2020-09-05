@@ -39,7 +39,7 @@ export default defineComponent({
 .screen {
   display: grid;
   grid-template-rows: 70px minmax(0, auto) 50px;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   width: 100%;
 }

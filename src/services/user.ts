@@ -19,7 +19,7 @@ async function fetchUserProfile() {
 
   userProfile.uid = uid
   userProfile.displayName = userData.displayName
-  userProfile.currentLocation = userData.currentLocation
+  userProfile.currentLocation = userData.currentLocation || 'coad-abode'
 }
 
 async function updateUser(user: any) {
