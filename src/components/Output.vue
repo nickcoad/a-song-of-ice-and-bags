@@ -18,6 +18,10 @@ export default defineComponent({
   components: {
     MessageDisplay
   },
+  updated() {
+    const container = document.querySelector(".output");
+    container.scrollTop = container.scrollHeight;
+  },
   setup() {
     return {
       messages

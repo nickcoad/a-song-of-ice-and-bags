@@ -1,6 +1,6 @@
 <template>
   <div class="sign-in-or-register">
-    <h1 class="game-title">A Game of Ice and Bags</h1>
+    <h1 class="game-title">A Song of Ice and Bags</h1>
     <div>
       <div class="tabs">
         <div :class="tabClasses.signIn" @click="signInMode">Sign In</div>

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="display">
+      <loading v-if="loading" />
       <sign-in-or-register v-if="!isSignedIn" />
       <screen v-else msg="A Song of Ice and Bags" />
     </div>
@@ -11,26 +12,33 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { isSignedIn } from './services/user'
+import { loading } from './services/game'
 
 import Screen from './components/Screen.vue'
 import Debug from './components/Debug.vue'
 import SignInOrRegister from './components/account/SignInOrRegister.vue'
+import Loading from './components/common/Loading.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     Screen,
     Debug,
-    SignInOrRegister
+    SignInOrRegister,
+    Loading
   },
   setup() {
-    return { isSignedIn }
+    return { isSignedIn, loading }
   }
 })
 </script>
 
 <style lang="scss">
 $accent-color: #42b983;
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -43,12 +51,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  position: relative;
 
   height: 100vh;
   width: 100vw;
 
   display: grid;
   grid-template-columns: 80% 20%;
+}
+
+.display {
+  height: 100%;
+  position: relative;
 }
 
 * {

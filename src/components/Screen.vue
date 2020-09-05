@@ -4,7 +4,7 @@
     <div class="output-and-status">
       <status />
       <output-box />
-      <inventory />
+      <!-- <inventory /> -->
     </div>
     <div class="input">
       <input-box />
@@ -26,7 +26,6 @@ export default defineComponent({
     InputBox,
     OutputBox,
     Status,
-    Inventory,
     TitleBar
   },
   props: {
@@ -46,6 +45,6 @@ export default defineComponent({
 
 .output-and-status {
   display: grid;
-  grid-template-columns: 250px auto 250px;
+  grid-template-columns: 250px auto;
 }
 </style>

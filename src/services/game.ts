@@ -1,6 +1,6 @@
 import locations from '@/data/locations.ts'
 import people from '@/data/people.ts'
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
 import { addMessage } from './messages'
 import { auth, usersCollection } from './firebase'
 import { userProfile, updateUser } from './user'
@@ -9,6 +9,8 @@ const currentLocation = computed(() => {
   const location = locations.filter(_ => _.name == userProfile.currentLocation)
   return location[0]
 })
+
+const loading = ref(false)
 
 const availableLocations = computed(() => {
   const available = locations
@@ -36,7 +38,9 @@ const availablePeople = computed(() => {
 })
 
 async function setLocation(locationName: string) {
+  loading.value = true
   await updateUser({ currentLocation: locationName })
+  loading.value = false
 
   addMessage('You travelled to ' + currentLocation.value.displayName, 'output')
 
@@ -55,4 +59,10 @@ async function setLocation(locationName: string) {
   addMessage(message, 'info')
 }
 
-export { currentLocation, availableLocations, availablePeople, setLocation }
+export {
+  loading,
+  currentLocation,
+  availableLocations,
+  availablePeople,
+  setLocation
+}
