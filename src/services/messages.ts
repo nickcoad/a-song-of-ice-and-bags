@@ -25,4 +25,8 @@ function addMessage(msg: string, type: 'input' | 'output' | 'info') {
   }
 }
 
-export { messages, addMessage }
+function clearMessages() {
+  messages.value.length = 0
+}
+
+export { messages, addMessage, clearMessages }

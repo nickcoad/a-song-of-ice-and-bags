@@ -16,6 +16,7 @@ function handleCommand(cmd: Command) {
   switch (cmd.command) {
     case 'move': {
       const locationNum = parseInt(cmd.payload[0])
+      console.log(availableLocations.value)
       const newLocation = availableLocations.value[locationNum - 1]
 
       setLocation(newLocation.name)

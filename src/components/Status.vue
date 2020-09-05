@@ -4,8 +4,8 @@
     {{ currentLocation.displayName }}
     <h1>Available Locations</h1>
     <ol>
-      <li v-for="location in availableLocations" :key="location.name">
-        {{ location.displayName }}
+      <li v-for="(location, index) in availableLocations" :key="location.name">
+        <location-link :location="location" :index="index" />
       </li>
     </ol>
     <h1>Available People</h1>
@@ -24,24 +24,33 @@
 </template>
 
 <script type="ts">
-import { defineComponent } from 'vue'
 import { currentLocation, availableLocations, availablePeople } from '@/services/game';
 import { availableCommands } from '@/services/commands';
 
-export default defineComponent({
+import LocationLink from '@/components/common/LocationLink'
+
+export default {
+  components: {
+    LocationLink
+  },
   name: 'Status',
   setup() {
+    const test = function (clickName) {
+      return function () {
+        console.log(clickName);
+      }
+    }
     return {
+      test,
       currentLocation,
       availableLocations,
       availablePeople,
       availableCommands
     }
   }
-})
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .status {
   color: #fff;
