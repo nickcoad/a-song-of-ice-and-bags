@@ -5,6 +5,7 @@
         Sign in
       </template>
       <template v-slot:card-content>
+        <errors v-if="!formIsValid" :errors="errors" />
         <form @submit="onFormSubmit">
           <label>Email address</label>
           <input type="email" @keyup="updateEmail" />
@@ -22,17 +23,20 @@ import { ref, computed } from 'vue'
 import { auth } from '@/services/firebase'
 import { getValueFromInputEvent } from '@/services/helpers/forms'
 import { fetchUserProfile } from '@/services/user'
-import { initialising } from '@/services/game'
+import { loading } from '@/services/game'
 
 import Card from '../common/Card.vue'
+import Errors from './Errors.vue'
 
 export default {
   components: {
-    Card
+    Card,
+    Errors
   },
   setup() {
     const email = ref('')
     const password = ref('')
+    const errors = ref<string[]>([])
 
     function updateEmail(event: Event) {
       email.value = getValueFromInputEvent(event)
@@ -42,11 +46,18 @@ export default {
       password.value = getValueFromInputEvent(event)
     }
 
-    const formIsValid = computed(() => {
-      if (!email.value) return false
-      if (!password.value) return false
+    const validateForm = function() {
+      errors.value = []
+      if (!email.value) {
+        errors.value.push('You must enter an email address.')
+      }
+      if (!password.value) {
+        errors.value.push('You must enter a password.')
+      }
+    }
 
-      return true
+    const formIsValid = computed(() => {
+      return errors.value.length === 0
     })
 
     function resetForm() {
@@ -55,10 +66,12 @@ export default {
     }
 
     async function onFormSubmit(event: Event) {
-      initialising.value = true
       event.preventDefault()
+      validateForm()
 
       if (!formIsValid.value) return
+
+      loading.value = true
 
       // Create the account
       const { user } = await auth.signInWithEmailAndPassword(
@@ -67,7 +80,7 @@ export default {
       )
 
       if (!user) {
-        initialising.value = false
+        loading.value = false
         return
       }
 
@@ -79,7 +92,9 @@ export default {
     return {
       updateEmail,
       updatePassword,
-      onFormSubmit
+      onFormSubmit,
+      errors,
+      formIsValid
     }
   }
 }

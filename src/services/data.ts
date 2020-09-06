@@ -2,19 +2,22 @@ import {
   commandsCollection,
   itemsCollection,
   locationsCollection,
-  peopleCollection
+  peopleCollection,
+  usersCollection
 } from './firebase'
 import { loading } from '@/services/game'
 import { ref } from 'vue'
 import Location from '@/models/Location'
 import Person from '@/models/Person'
 import Item from '@/models/Item'
+import User from '@/models/User'
 import AvailableCommand from '@/models/AvailableCommand'
 
 const locations = ref<Location[]>([])
 const people = ref<Person[]>([])
 const items = ref<Item[]>([])
 const commands = ref<AvailableCommand[]>([])
+const users = ref<User[]>([])
 
 async function loadLocations() {
   locations.value = (await locationsCollection.get()).docs.map(
@@ -54,6 +57,14 @@ async function loadCommands() {
   console.log(`Command data loaded: ${commands.value.length} commands found`)
 }
 
+async function loadUsers() {
+  users.value = (await usersCollection.get()).docs.map(_ => _.data() as User)
+  usersCollection.onSnapshot(snapshot => {
+    users.value = snapshot.docs.map(_ => _.data() as User)
+  })
+  console.log(`User data loaded: ${users.value.length} users found`)
+}
+
 async function loadData() {
   console.log('Loading data from Firebase')
 
@@ -62,7 +73,8 @@ async function loadData() {
   await loadPeople()
   await loadItems()
   await loadCommands()
+  await loadUsers()
   loading.value = false
 }
 
-export { loadData, locations, people, commands, items }
+export { loadData, locations, people, commands, items, users }

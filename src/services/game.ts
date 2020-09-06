@@ -1,4 +1,4 @@
-import { locations, people } from '@/services/data'
+import { locations, people, users } from '@/services/data'
 import { computed, ref } from 'vue'
 import { addMessage } from './messages'
 import { userProfile, updateUser } from './user'
@@ -16,6 +16,21 @@ const initialising = ref(true)
 const availableLocations = computed(() => {
   const available = locations.value
     .filter(_ => currentLocation.value.connections.includes(_.name))
+    .sort((a, b) => {
+      if (a.displayName > b.displayName) return 1
+      if (a.displayName < b.displayName) return -1
+      return 0
+    })
+  return available
+})
+
+const availableUsers = computed(() => {
+  const available = users.value
+    .filter(
+      _ =>
+        currentLocation.value.name == _.currentLocation &&
+        _.displayName != userProfile.displayName
+    )
     .sort((a, b) => {
       if (a.displayName > b.displayName) return 1
       if (a.displayName < b.displayName) return -1
@@ -66,5 +81,6 @@ export {
   currentLocation,
   availableLocations,
   availablePeople,
+  availableUsers,
   setLocation
 }

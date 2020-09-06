@@ -5,6 +5,7 @@
         Register
       </template>
       <template v-slot:card-content>
+        <errors v-if="!formIsValid" :errors="errors" />
         <form @submit="onFormSubmit">
           <label>Email address</label>
           <input type="email" @keyup="updateEmail" />
@@ -23,21 +24,24 @@
 
 <script lang="ts">
 import { ref, computed } from 'vue'
-import { initialising } from '@/services/game'
+import { loading, initialising } from '@/services/game'
 import { auth, usersCollection } from '@/services/firebase'
 import { getValueFromInputEvent } from '@/services/helpers/forms'
 
 import Card from '../common/Card.vue'
+import Errors from './Errors.vue'
 
 export default {
   components: {
-    Card
+    Card,
+    Errors
   },
   setup() {
     const email = ref('')
     const displayName = ref('')
     const password = ref('')
     const repeatPassword = ref('')
+    const errors = ref<string[]>([])
 
     function updateEmail(event: Event) {
       email.value = getValueFromInputEvent(event)
@@ -56,10 +60,24 @@ export default {
     }
 
     const formIsValid = computed(() => {
-      if (password.value !== repeatPassword.value) return false
-
-      return true
+      return errors.value.length === 0
     })
+
+    const validateForm = function() {
+      errors.value = []
+      if (!email.value) {
+        errors.value.push('You must enter an email address.')
+      }
+      if (!displayName.value) {
+        errors.value.push('You must enter a display name.')
+      }
+      if (!password.value) {
+        errors.value.push('You must enter a password.')
+      }
+      if (password.value !== repeatPassword.value) {
+        errors.value.push('Password and Repeat Password do not match.')
+      }
+    }
 
     function resetForm() {
       email.value = ''
@@ -69,19 +87,28 @@ export default {
     }
 
     async function onFormSubmit(event: Event) {
-      initialising.value = true
       event.preventDefault()
+      validateForm()
 
       if (!formIsValid.value) return
 
+      loading.value = true
+
+      let user: firebase.User | null = null
+
       // Create the account
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email.value,
-        password.value
-      )
+      try {
+        const result = await auth.createUserWithEmailAndPassword(
+          email.value,
+          password.value
+        )
+        user = result.user
+      } catch (error) {
+        errors.value.push(error.message)
+      }
 
       if (!user) {
-        initialising.value = false
+        loading.value = false
         return
       }
 
@@ -98,7 +125,9 @@ export default {
       updateDisplayName,
       updatePassword,
       updateRepeatPassword,
-      onFormSubmit
+      onFormSubmit,
+      formIsValid,
+      errors
     }
   }
 }

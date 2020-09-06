@@ -14,6 +14,12 @@
         <person-link :person="person" :index="index" />
       </li>
     </ol>
+    <h1>Available Users</h1>
+    <ol>
+      <li v-for="(user, index) in availableUsers" :key="user.displayName">
+        <user-link :user="user" :index="index" />
+      </li>
+    </ol>
     <h1>Available Commands</h1>
     <ul>
       <li v-for="command in availableCommands" :key="command">
@@ -24,16 +30,18 @@
 </template>
 
 <script type="ts">
-import { currentLocation, availableLocations, availablePeople } from '@/services/game';
+import { currentLocation, availableLocations, availablePeople, availableUsers } from '@/services/game';
 import { availableCommands } from '@/services/commands';
 
 import LocationLink from '@/components/common/LocationLink'
 import PersonLink from '@/components/common/PersonLink'
+import UserLink from '@/components/common/UserLink'
 
 export default {
   components: {
     LocationLink,
-    PersonLink
+    PersonLink,
+    UserLink
   },
   name: 'Status',
   setup() {
@@ -47,6 +55,7 @@ export default {
       currentLocation,
       availableLocations,
       availablePeople,
+      availableUsers,
       availableCommands
     }
   }
