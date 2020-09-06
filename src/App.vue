@@ -1,25 +1,25 @@
 <template>
-  <div id="app">
+  <loading v-if="initialising" />
+  <div id="app" v-if="!initialising">
     <div class="display">
       <loading v-if="loading" />
       <sign-in-or-register v-if="!isSignedIn" />
-      <screen v-else msg="A Song of Ice and Bags" />
+      <screen v-if="isSignedIn" msg="A Song of Ice and Bags" />
     </div>
-    <debug />
+    <debug v-if="false" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { isSignedIn } from './services/user'
-import { loading } from './services/game'
+import { initialising, loading } from './services/game'
 
 import Screen from './components/Screen.vue'
 import Debug from './components/Debug.vue'
 import SignInOrRegister from './components/account/SignInOrRegister.vue'
 import Loading from './components/common/Loading.vue'
 
-export default defineComponent({
+export default {
   name: 'App',
   components: {
     Screen,
@@ -28,9 +28,9 @@ export default defineComponent({
     Loading
   },
   setup() {
-    return { isSignedIn, loading }
+    return { isSignedIn, initialising, loading }
   }
-})
+}
 </script>
 
 <style lang="scss">
@@ -76,7 +76,6 @@ body::-webkit-scrollbar-thumb {
   width: 100vw;
 
   display: grid;
-  grid-template-columns: 80% 20%;
 }
 
 .display {

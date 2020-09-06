@@ -4,6 +4,7 @@ import {
   locationsCollection,
   peopleCollection
 } from './firebase'
+import { loading } from '@/services/game'
 import { ref } from 'vue'
 import Location from '@/models/Location'
 import Person from '@/models/Person'
@@ -56,10 +57,12 @@ async function loadCommands() {
 async function loadData() {
   console.log('Loading data from Firebase')
 
+  loading.value = true
   await loadLocations()
   await loadPeople()
   await loadItems()
   await loadCommands()
+  loading.value = false
 }
 
 export { loadData, locations, people, commands, items }

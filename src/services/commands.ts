@@ -33,7 +33,11 @@ async function handleCommand(cmd: Command) {
 
       if (thisPerson) {
         addMessage('You look at ' + thisPerson.displayName, 'output')
-        addMessage(thisPerson.appearance, 'info')
+        addMessage(
+          thisPerson.appearance ||
+            `${thisPerson.displayName} looks pretty normal.`,
+          'info'
+        )
       }
 
       break
@@ -45,7 +49,10 @@ async function handleCommand(cmd: Command) {
       if (!thisPerson) return
 
       addMessage('You take a big whiff of ' + thisPerson.displayName, 'output')
-      addMessage(thisPerson.odour || 'They smell pleasant!', 'info')
+      addMessage(
+        thisPerson.odour || `${thisPerson.displayName} smells pleasant!`,
+        'info'
+      )
 
       break
     }
@@ -57,8 +64,12 @@ async function handleCommand(cmd: Command) {
 
       addMessage('You talk to ' + thisPerson.displayName, 'output')
 
-      const rand = Math.floor(Math.random() * thisPerson.quotes.length)
-      addMessage(thisPerson.quotes[rand], 'info')
+      let quote = `${thisPerson.displayName} has nothing to say.`
+      if (thisPerson.quotes && thisPerson.quotes.length > 0) {
+        const rand = Math.floor(Math.random() * thisPerson.quotes.length)
+        quote = thisPerson.quotes[rand]
+      }
+      addMessage(quote, 'info')
     }
   }
 }

@@ -12,11 +12,10 @@
 
 <script lang="ts">
 import { isSignedIn, userProfile } from '@/services/user'
-import { auth } from '@/services/firebase'
 
 export default {
   setup() {
-    return { auth, isSignedIn, userProfile }
+    return { isSignedIn, userProfile }
   }
 }
 </script>
@@ -26,5 +25,6 @@ export default {
   background-color: #000;
   color: #fff;
   font-size: 0.75rem;
+  width: 20%;
 }
 </style>

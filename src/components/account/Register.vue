@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { ref, computed } from 'vue'
+import { initialising } from '@/services/game'
 import { auth, usersCollection } from '@/services/firebase'
 import { getValueFromInputEvent } from '@/services/helpers/forms'
 
@@ -68,6 +69,7 @@ export default {
     }
 
     async function onFormSubmit(event: Event) {
+      initialising.value = true
       event.preventDefault()
 
       if (!formIsValid.value) return
@@ -78,7 +80,10 @@ export default {
         password.value
       )
 
-      if (!user) return
+      if (!user) {
+        initialising.value = false
+        return
+      }
 
       // Set their display name
       await usersCollection.doc(user.uid).set({

@@ -11,6 +11,7 @@ const currentLocation = computed(() => {
 })
 
 const loading = ref(false)
+const initialising = ref(true)
 
 const availableLocations = computed(() => {
   const available = locations.value
@@ -61,6 +62,7 @@ async function setLocation(locationName: string) {
 
 export {
   loading,
+  initialising,
   currentLocation,
   availableLocations,
   availablePeople,

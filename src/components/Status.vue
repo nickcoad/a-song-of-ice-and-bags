@@ -10,8 +10,8 @@
     </ol>
     <h1>Available People</h1>
     <ol>
-      <li v-for="person in availablePeople" :key="person.name">
-        {{ person.displayName }}
+      <li v-for="(person, index) in availablePeople" :key="person.name">
+        <person-link :person="person" :index="index" />
       </li>
     </ol>
     <h1>Available Commands</h1>
@@ -28,10 +28,12 @@ import { currentLocation, availableLocations, availablePeople } from '@/services
 import { availableCommands } from '@/services/commands';
 
 import LocationLink from '@/components/common/LocationLink'
+import PersonLink from '@/components/common/PersonLink'
 
 export default {
   components: {
-    LocationLink
+    LocationLink,
+    PersonLink
   },
   name: 'Status',
   setup() {

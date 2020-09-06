@@ -22,6 +22,7 @@ import { ref, computed } from 'vue'
 import { auth } from '@/services/firebase'
 import { getValueFromInputEvent } from '@/services/helpers/forms'
 import { fetchUserProfile } from '@/services/user'
+import { initialising } from '@/services/game'
 
 import Card from '../common/Card.vue'
 
@@ -54,6 +55,7 @@ export default {
     }
 
     async function onFormSubmit(event: Event) {
+      initialising.value = true
       event.preventDefault()
 
       if (!formIsValid.value) return
@@ -64,9 +66,12 @@ export default {
         password.value
       )
 
-      if (!user) return
+      if (!user) {
+        initialising.value = false
+        return
+      }
 
-      fetchUserProfile()
+      await fetchUserProfile()
 
       resetForm()
     }
