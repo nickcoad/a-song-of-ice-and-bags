@@ -15,7 +15,7 @@ function addMessage(msg: string, type: 'input' | 'output' | 'info') {
 
   const split = msg.split(' ')
 
-  if (availableCommands.map(_ => _.name).includes(split[0])) {
+  if (availableCommands.value.map(_ => _.name).includes(split[0])) {
     const cmd = split[0]
     const payload = split.filter((_, i) => i !== 0)
 

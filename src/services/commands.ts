@@ -1,5 +1,5 @@
 import Command from '@/models/Command'
-import commands from '@/data/commands.ts'
+import { commands } from '@/services/data'
 import {
   setLocation,
   availableLocations,
@@ -10,14 +10,13 @@ import { addMessage } from './messages'
 
 const availableCommands = commands
 
-function handleCommand(cmd: Command) {
+async function handleCommand(cmd: Command) {
   console.log(`Handling command: '${cmd.command}' with payload:`, cmd.payload)
 
   switch (cmd.command) {
     case 'move': {
       const locationNum = parseInt(cmd.payload[0])
-      console.log(availableLocations.value)
-      const newLocation = availableLocations.value[locationNum - 1]
+      const newLocation = (await availableLocations.value)[locationNum - 1]
 
       setLocation(newLocation.name)
 
@@ -26,11 +25,11 @@ function handleCommand(cmd: Command) {
     case 'look': {
       if (!cmd.payload[0]) {
         addMessage('You take a look around you', 'output')
-        addMessage(currentLocation.value.appearance, 'info')
+        addMessage((await currentLocation.value).appearance, 'info')
       }
 
       const personNum = parseInt(cmd.payload[0])
-      const thisPerson = availablePeople.value[personNum - 1]
+      const thisPerson = (await availablePeople.value)[personNum - 1]
 
       if (thisPerson) {
         addMessage('You look at ' + thisPerson.displayName, 'output')
@@ -41,7 +40,7 @@ function handleCommand(cmd: Command) {
     }
     case 'smell': {
       const personNum = parseInt(cmd.payload[0])
-      const thisPerson = availablePeople.value[personNum - 1]
+      const thisPerson = (await availablePeople.value)[personNum - 1]
 
       if (!thisPerson) return
 
@@ -52,7 +51,7 @@ function handleCommand(cmd: Command) {
     }
     case 'talk': {
       const personNum = parseInt(cmd.payload[0])
-      const thisPerson = availablePeople.value[personNum - 1]
+      const thisPerson = (await availablePeople.value)[personNum - 1]
 
       if (!thisPerson) return
 

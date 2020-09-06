@@ -36,4 +36,23 @@ export default defineComponent({
   overflow: auto;
   padding: 1rem 1.5rem;
 }
+
+$scrollbarBG: transparent;
+$thumbBG: #90a4ae;
+
+.output::-webkit-scrollbar {
+  width: 11px;
+}
+.output {
+  scrollbar-width: thin;
+  scrollbar-color: $thumbBG $scrollbarBG;
+}
+.output::-webkit-scrollbar-track {
+  background: $scrollbarBG;
+}
+.output::-webkit-scrollbar-thumb {
+  background-color: $thumbBG;
+  border-radius: 6px;
+  border: 3px solid $scrollbarBG;
+}
 </style>

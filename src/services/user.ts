@@ -26,7 +26,9 @@ async function updateUser(user: any) {
   const merged = { ...userProfile, ...user }
 
   await usersCollection.doc(userProfile.uid).update(merged)
-  await fetchUserProfile()
+  userProfile.currentLocation = merged.currentLocation
+  userProfile.displayName = merged.displayName
+  userProfile.uid = merged.uid
 }
 
 export { userProfile, fetchUserProfile, updateUser, isSignedIn }

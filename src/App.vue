@@ -45,6 +45,25 @@ body {
   padding: 0;
 }
 
+$scrollbarBG: #cfd8dc;
+$thumbBG: #90a4ae;
+
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: $thumbBG $scrollbarBG;
+}
+body::-webkit-scrollbar-track {
+  background: $scrollbarBG;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: $thumbBG;
+  border-radius: 6px;
+  border: 3px solid $scrollbarBG;
+}
+
 #app {
   background-color: #212730;
   font-family: 'Ubuntu Mono', Helvetica, Arial, sans-serif;

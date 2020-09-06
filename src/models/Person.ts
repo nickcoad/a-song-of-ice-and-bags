@@ -1,12 +1,11 @@
 import GameObject from './GameObject'
 
-export default class Location implements GameObject {
+export default class Person implements GameObject {
   name: string = ''
   displayName: string = ''
+  quotes: string[] = []
   appearance: string = ''
-  connections: string[] = []
-  flavour: string[] = []
-  people: string[] = []
+  odour: string = ''
 
   constructor(name: string, displayName: string) {
     this.name = name

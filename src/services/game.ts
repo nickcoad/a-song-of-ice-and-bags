@@ -1,19 +1,19 @@
-import locations from '@/data/locations.ts'
-import people from '@/data/people.ts'
-import { reactive, computed, ref } from 'vue'
+import { locations, people } from '@/services/data'
+import { computed, ref } from 'vue'
 import { addMessage } from './messages'
-import { auth, usersCollection } from './firebase'
 import { userProfile, updateUser } from './user'
 
 const currentLocation = computed(() => {
-  const location = locations.filter(_ => _.name == userProfile.currentLocation)
+  const location = locations.value.filter(
+    _ => _.name == userProfile.currentLocation
+  )
   return location[0]
 })
 
 const loading = ref(false)
 
 const availableLocations = computed(() => {
-  const available = locations
+  const available = locations.value
     .filter(_ => currentLocation.value.connections.includes(_.name))
     .sort((a, b) => {
       if (a.displayName > b.displayName) return 1
@@ -27,7 +27,7 @@ const availablePeople = computed(() => {
   const temp = currentLocation.value.people as string[]
   if (!temp) return []
 
-  const available = people
+  const available = people.value
     .filter(_ => temp.includes(_.name))
     .sort((a, b) => {
       if (a.displayName > b.displayName) return 1
